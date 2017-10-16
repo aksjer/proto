@@ -188,7 +188,7 @@
 
     // (true ? sayHello : sayHello)();
 
-    // var add = x => y => z => (x + y);
+
     // const isGreater = x => x > 5;
 
     // const sleep = time => new Promise(r => setTimeout(() => r(time), time));
@@ -207,7 +207,7 @@
 
     // })();
 
-    var customHandler = {
+    const customHandler = {
       get: function (target, name) {
         return 'hello ' + target[name];
       },
@@ -216,9 +216,46 @@
       }
     }
 
-    var prox = new Proxy({}, customHandler);
+    const prox = new Proxy({}, customHandler);
 
-    Object.defineProperty(prox, 'b', { value: '!!', writable: true, enumerable: true, configurable: false });
+    prox.z = 'z';
+
+    delete prox.z;
+
+    Object.defineProperty(prox, 'b', { value: '!!', writable: false, enumerable: true, configurable: false });
+
+    const bool = null || undefined || '';
+    const bool2 = null && undefined && '';
+
+    // Object.freeze(prox);
+    // Object.seal(prox);
+    // Object.preventExtensions(prox);
+
+    function* g() {
+      yield 1;
+      yield 2;
+    }
+
+    const gg = g();
+
+    const g1 = gg.next();
+    const g2 = gg.next();
+
+    const add = x => y => z => (x + y);
+
+    const add1 = add(66)(1)();
+
+
+    const multiplyBy2 = no => no * 2
+    const map = function (mappingFn) {
+      return arr => arr.map(mappingFn);
+    };
+
+    const map2 = arr => arr.map(multiplyBy2);
+
+    const multiplyArrBy2 = map(multiplyBy2)
+    const multiplyArrBy2bis = map2([1, 2, 3]);
+    const myarr = multiplyArrBy2([1, 2, 3]);
 
 
   </script>
