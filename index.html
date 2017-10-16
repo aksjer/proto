@@ -1,0 +1,227 @@
+<html>
+
+<head>
+  <style>
+    body {
+      background-color: #222;
+      color: white;
+    }
+
+    #overlay {
+      width: 100%;
+      top: 0;
+      left: 0;
+      position: fixed;
+      overflow-x: hidden;
+      background-color: rgba(50, 50, 50, 0.5);
+      height: 0;
+      transition: 1s ease-out;
+    }
+
+    .main {
+      display: flex;
+      height: 500px;
+    }
+
+    .un {
+      /* background-color: #48251F; */
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-content: center;
+    }
+
+    .deux {
+      /* background-color: #2C4426; */
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .oo {
+      /* height: 10px; */
+      border: solid 1px white;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.4.3/Rx.min.js"></script>
+</head>
+
+<body>
+
+  <div class="main">
+
+    <div class="un">
+      <div class="oo">1</div>
+      <div class="oo">1</div>
+    </div>
+    <div class="deux">
+      <div class="oo">2</div>
+      <div class="oo">2</div>
+    </div>
+
+  </div>
+
+  <div id="overlay"></div>
+
+  <button value="1000">btn1</button>
+  <button value="3500">btn2</button>
+
+  <!-- <header>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel nesciunt amet tempore quibusdam, repellat cum temporibus consectetur
+    optio ad, laboriosam quasi, labore vitae voluptas, delectus incidunt iure illo veritatis aut.
+  </header>
+  <footer>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium quod officiis consequuntur, laboriosam recusandae excepturi
+    deleniti soluta labore distinctio quasi, quae at sit illo error illum corrupti beatae ipsum nobis?
+  </footer> -->
+
+  <script>
+    const overlay = document.getElementById('overlay');
+    const Observable = Rx.Observable;
+
+    const observer = {
+      next: v => console.log(v),
+      error: err => console.log(err),
+      complete: () => console.log('complete')
+    };
+
+    function Person(name) {
+      this.name = name;
+      this.hi = () => console.log(`hello ${this.name}`);
+      this.animal = new Animal();
+    }
+
+    function Animal() {
+      this.bee = () => console.log('bee');
+    }
+
+    Animal.prototype.wouaf = () => console.log('wouaf');
+
+    const p1 = new Person('bob');
+
+
+    const a = new Map();
+    const b = new Set();
+    a.set(15, 566);
+
+    function* iter() {
+      yield 'jer';
+      yield {
+        jeer: 'jerome'
+      };
+    }
+
+    const ut = iter();
+
+
+    // Observable
+    //   .from([
+    //     { value: 'a', time: 2000 },
+    //     { value: 'b', time: 1500 },
+    //     { value: 'c', time: 0 }
+    //   ])
+    //   .flatMap(obj => {
+    //     // .switchMap(obj => {
+    //     // .concatMap(obj => {
+    //     // .map(obj => {
+    //     console.log(obj);
+    //     return Observable.of(obj.value).delay(obj.time);
+    //   })
+    //   .subscribe(observer);
+
+
+    Observable
+      .fromEvent(document.getElementsByTagName('button'), 'click')
+      .map(e => e.target)
+      .groupBy(e => e.textContent, e => e.textContent)
+      .mergeMap(e => e.bufferTime(1000))
+      .filter(e => e.length > 5)
+      .map(e => e[0])
+      .subscribe(observer);
+
+
+    const sum = tab => tab.length ? tab.pop() + sum(tab) : 0;
+
+    const summ = tab => tab.reduce((acc, cur) => cur += acc, 0);
+
+    const abc = { ab: 'a', c: 'cc', d: [2, 99] };
+
+    const { ab, d } = abc;
+
+    const aaa = [1, 0]
+    aaa.push(...d)
+
+    // function doStuff(a, b, c){
+    //   console.log(a, b, c)
+    // }
+
+    // const doStuff = async time => {
+    //   new Promise((res, res) => {
+    //     setTimeout(() => {
+    //       res('Hello buddy');
+    //     }, time);
+    //   });
+    // }
+
+    // function doStuff(time) {
+    //   return new Promise((res, rej) => setTimeout(() => res('Hello buddy'), time));
+    // }
+
+    // (async () => {
+    //   console.log(await doStuff(2500));
+    //   console.log('ok');
+    // })();
+
+    // var sayHello = function () {
+    //   console.log('hello');
+    // }
+
+    // var obsToString = async function (word = 'hello', time = 2000) {
+    //   return Observable.timer(time).map(() => word).toPromise();
+    // };
+
+    // (async function () {
+    //   console.log(await obsToString());
+    //   console.log('ok');
+    // })();
+
+    // (true ? sayHello : sayHello)();
+
+    // var add = x => y => z => (x + y);
+    // const isGreater = x => x > 5;
+
+    // const sleep = time => new Promise(r => setTimeout(() => r(time), time));
+
+    // (async () => {
+
+    //   var t1 = Date.now()
+    //   Promise.all([
+    //     sleep(2000),
+    //     sleep(1000),
+    //     sleep(500)
+    //   ]).then(e => {
+    //     console.log(e);
+    //     console.log(Date.now() - t1);
+    //   });
+
+    // })();
+
+    var customHandler = {
+      get: function (target, name) {
+        return 'hello ' + target[name];
+      },
+      set: function (target, name, value) {
+        target[name] = value;
+      }
+    }
+
+    var prox = new Proxy({}, customHandler);
+
+    Object.defineProperty(prox, 'b', { value: '!!', writable: true, enumerable: true, configurable: false });
+
+
+  </script>
+</body>
+
+</html>
