@@ -247,14 +247,20 @@
 
 
     const multiplyBy2 = no => no * 2
-    const map = function (mappingFn) {
-      return arr => arr.map(mappingFn);
-    };
+    // const map = mappingFn => arr => arr.map(mappingFn);
 
-    const map2 = arr => arr.map(multiplyBy2);
+    // equivalent
+
+    const map = function (foo) {
+      return function (arr) {
+        return arr.map(foo);
+      }
+    }
+
+    // const map2 = arr => arr.map(multiplyBy2);
 
     const multiplyArrBy2 = map(multiplyBy2)
-    const multiplyArrBy2bis = map2([1, 2, 3]);
+    // const multiplyArrBy2bis = map2([1, 2, 3]);
     const myarr = multiplyArrBy2([1, 2, 3]);
 
 
