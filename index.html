@@ -296,6 +296,8 @@
       .switchMap(() => ba)
       .subscribe(observer);
 
+    const aplati = arr => arr.reduce((acc, cur) => acc.concat(Array.isArray(cur) ? aplati(cur) : cur), []);
+
 
   </script>
 </body>
