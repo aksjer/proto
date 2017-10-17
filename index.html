@@ -47,6 +47,37 @@
       border: solid 1px white;
       width: 500px;
     }
+
+    .main {
+      border: solid 1px red;
+      padding: 10px;
+      flex: 1;
+      flex-wrap: wrap;
+    }
+
+    .main div {
+      border: solid 1px white;
+      /* flex: 1; */
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 300px;
+    }
+
+    .premiere {
+      color: pink;
+      flex: 3;
+    }
+
+    .deuxieme {
+      color: green;
+      flex: 3;
+    }
+
+    .troisieme {
+      color: yellow;
+      flex: 2;
+    }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.4.3/Rx.min.js"></script>
 </head>
@@ -55,22 +86,30 @@
 
   <div class="main">
 
-    <div class="un">
+    <div class="premiere">premiere colonnepremiere colonnepremiere colonnepremiere colonnepremiere colonnepremiere colonne</div>
+    <div class="deuxieme">deuxieme colonnedeuxieme colonnedeuxieme colonnedeuxieme colonnedeuxieme colonne</div>
+    <div class="troisieme">troisieme colonnetroisieme colonnetroisieme colonnetroisieme colonne</div>
+
+  </div>
+
+
+
+  <!-- <div class="un">
       <div class="oo">1</div>
       <div class="oo">1</div>
-    </div>
-    <!--     
+    </div> -->
+  <!--     
     <div class="deux">
       <div class="oo">2</div>
       <div class="oo">2</div>
     </div> -->
 
-  </div>
+
 
   <div id="overlay"></div>
 
-  <button value="1000">btn1</button>
-  <button value="3500">btn2</button>
+  <!-- <button value="1000">btn1</button>
+  <button value="3500">btn2</button> -->
 
   <!-- <header>
     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel nesciunt amet tempore quibusdam, repellat cum temporibus consectetur
