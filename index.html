@@ -280,23 +280,37 @@
     // constructor(private c: C) -> use instance of A, if null , create instance of A and inject into c
 
 
-    const abb = Rx.Observable
-      .interval(2000)
-      .take(2)
-      .map(() => 'a');
+    // const abb = Rx.Observable
+    //   .interval(2000)
+    //   .take(2)
+    //   .map(() => 'a');
 
-    const ba = Rx.Observable
-      .interval(1000)
-      .take(5)
-      .map(() => 'b');
+    // const ba = Rx.Observable
+    //   .interval(1000)
+    //   .take(5)
+    //   .map(() => 'b');
 
-    abb
-      // .concatMap(() => ba)
-      // .mergeMap(() => ba)
-      .switchMap(() => ba)
-      .subscribe(observer);
+    // abb
+    //   // .concatMap(() => ba)
+    //   // .mergeMap(() => ba)
+    //   .switchMap(() => ba)
+    //   .subscribe(observer);
 
     const aplati = arr => arr.reduce((acc, cur) => acc.concat(Array.isArray(cur) ? aplati(cur) : cur), []);
+
+
+    const handlerr = {
+      get: function (target, key, r) {
+        console.log(`get value of ${key} in ${JSON.stringify(target)}`);
+        return Reflect.get(target, key);
+      }
+    }
+    const poo = new Proxy({ a: 'abc' }, handlerr);
+
+    console.log('poo.a');
+    console.log(poo.a);
+
+
 
 
   </script>
