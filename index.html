@@ -303,11 +303,17 @@
       get: function (target, key, r) {
         console.log(`get value of ${key} in ${JSON.stringify(target)}`);
         return Reflect.get(target, key);
+      },
+      deleteProperty: function (target, key, r) {
+        console.log(`delete ${key} in ${JSON.stringify(target)}`);
+        return Reflect.deleteProperty(target, key);
       }
     }
     const poo = new Proxy({ a: 'abc' }, handlerr);
 
     console.log('poo.a');
+    console.log(poo.a);
+    delete poo.a;
     console.log(poo.a);
 
 
