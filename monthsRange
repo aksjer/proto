@@ -1,0 +1,19 @@
+getMonthRange(date: Date) {
+    const day = date.getDate();
+    const month = date.getMonth();
+    const year = date.getFullYear();
+    const tab = [];
+    for (let i = 0; i < 12; i++) {
+      const d = { day: day, month: 0, year: year };
+      let v1 = month - 5 + i;
+      if (v1 < 0) {
+        v1 = -v1 * 11;
+        d.year--;
+      } else if (v1 > 11) {
+        d.year++;
+      }
+      d.month = v1 % 12;
+      tab.push(d);
+    }
+    return tab;
+  }
