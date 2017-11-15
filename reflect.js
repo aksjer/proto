@@ -1,3 +1,7 @@
+const obj = {foo: 'bar'};
+
+Reflect.get(obj, 'foo'); // === obj.foo
+
 // const o = { a: 'a' };
 // const handler = {
 //   deleteProperty: function (target, key) {
