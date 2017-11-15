@@ -6,6 +6,7 @@
 // };
 // const p = new Proxy(o, handler);
 // delete p.a;
+
 var target = {};
 var yay = Object.defineProperty(target, 'foo', { value: 'bar', configurable: false, writable: false });
 var yay2 = Reflect.defineProperty(target, 'foo', { value: 'bar', configurable: false, writable: false });
@@ -25,3 +26,15 @@ try{
 
 yay2 = Reflect.defineProperty(target, 'foo', { value: 'barz', configurable: false, writable: false });
 // yay2 = false
+
+// other ex
+var target = { foo: 'bar', baz: 'wat' }
+delete target.foo
+console.log(target)
+// <- { baz: 'wat' }
+Today, with ES6, you already have such a method in Reflect.deleteProperty.
+
+var target = { foo: 'bar', baz: 'wat' }
+Reflect.deleteProperty(target, 'foo')
+console.log(target)
+// <- { baz: 'wat' }
