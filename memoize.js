@@ -25,3 +25,7 @@ const handler = {
 
 const p = new Proxy(fib, handler);
 p.n = 43;
+p.exec;
+p.exec;
+p.n = 42;
+p.exec;
