@@ -91,3 +91,11 @@ const mapper = fn => tab => tab.map(fn);
 
 console.log(mapper(multiplyBy5)([1, 2, 3]));
 console.log(mapper(multiplyBy3)([1, 2, 3]));
+
+const arr1 = [
+  { name: 'bob', type: 0 },
+  { name: 'marley', type: 1 },
+  { name: 'heyo', type: 0 }
+];
+const arr2 = [0, 5, 6];
+arr1.filter(e => arr2.includes(e.type)).map(e => e.name);
