@@ -7,19 +7,19 @@ var i = 0;
 console.log(o, i);
 
 var arr = [1, 0, -5, 11, 4];
-(function tri(arr) {
-  for (let i = 1; i < arr.length; i++) {
+function tri(arr) {
+  const tab = arr.slice();
+  for (let i = 1; i < tab.length; i++) {
     var cpt = i;
-    while (cpt) {
-      if (arr[cpt - 1] > arr[cpt]) {
-        var temp = arr[cpt - 1];
-        arr[cpt - 1] = arr[cpt];
-        arr[cpt] = temp;
+    while (cpt--) {
+      if (tab[cpt] > tab[cpt + 1]) {
+        var temp = tab[cpt];
+        tab[cpt] = tab[cpt + 1];
+        tab[cpt + 1] = temp;
       } else {
         break;
       }
-      cpt--;
     }
   }
-  console.log(arr);
-})(arr);
+  return tab;
+}
