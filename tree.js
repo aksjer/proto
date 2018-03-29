@@ -1,64 +1,74 @@
-function Node(data) {
+function Node(data, parent) {
   this.data = data;
-  this.parent = null;
+  this.parent = parent || null;
   this.children = [];
 }
 
-function Tree(data) {
-  this.root = new Node(data);
+function Tree(rootNode) {
+  this.root = rootNode;
 }
 
-const t = new Tree('a');
-
-const b = new Node('b');
-const c = new Node('c');
-const d = new Node('d');
-const e = new Node('e');
-const f = new Node('f');
-
-t.root.children = [b, c, d];
-b.parent = c.parent = d.parent = t.root;
-d.children = [e, f];
-e.parent = f.parent = d;
-
-Tree.prototype.traverseDF = function (callback) {
-  (function recurse(node) {
-    for (let i in node.children) recurse(node.children[i]);
-    callback(node);
-  })(this.root);
-};
-
+/* Breadth-First */
 Tree.prototype.traverseBF = function (callback) {
-  (function recurse(node) {
-    callback(node);
-    for (let i in node.children) recurse(node.children[i]);
-  })(this.root);
-};
-
-Tree.prototype.contains = function (callback, traversal) {
-  traversal.call(this, callback);
-};
-
-Tree.prototype.add = function (data, toData, traversal) {
-  const child = new Node(data);
-  const callback = function (node) {
-    if (node.data === toData) child.parent = node;
+  const recurse = node => {
+    callback.call(this, node);
+    for (let i in node.children) recurse.call(this, node.children[i]);
   };
-  this.contains(callback, traversal);
-  if (child.parent) child.parent.children.push(child);
-  else throw Error('Cannot add node to a non-existent parent.');
+  recurse(this.root);
 };
 
-Tree.prototype.remove = function (data, traversal) {
-  let nodeToRemove;
-  const callback = function (node) {
-    if (node.data === data) nodeToRemove = node;
-  }
-  this.contains(callback, traversal);
-  const parent = nodeToRemove.parent;
-  if (parent) parent.children = parent.children.filter(e => e.data !== nodeToRemove.data);
-  else throw Error('Parent does not exist.');
+/* Depth-First */
+Tree.prototype.traverseDF = function (callback) {
+  const recurse = node => {
+    for (let i in node.children) recurse.call(this, node.children[i]);
+    callback.call(this, node);
+  };
+  recurse(this.root);
 };
+
+Tree.prototype.add = function (data, toData, traverse) {
+  traverse.call(this, node => {
+    if (node.data === toData) node.children.push(new Node(data, node));
+  });
+};
+
+Tree.prototype.remove = function (data, traverse) {
+  traverse.call(this, node => {
+    if (node.data === data) {
+      const i = node.parent.children.findIndex(n => n.data === data);
+      node.parent.children.splice(i, 1);
+    }
+  });
+};
+
+Tree.prototype.getLeafs = function () {
+  const leafs = [];
+  this.traverseDF(node => {
+    if (!node.children.length) leafs.push(node.data);
+  });
+  return leafs;
+};
+
+Tree.prototype.getRoot = function () {
+  let root;
+  this.traverseBF(function (node) {
+    if (!node.parent) root = node;
+  });
+  return root;
+};
+
+const tree = new Tree(new Node('a'));
+
+tree.add('b', 'a', tree.traverseDF);
+tree.add('c', 'a', tree.traverseDF);
+tree.add('d', 'a', tree.traverseDF);
+tree.add('e', 'd', tree.traverseDF);
+tree.add('f', 'd', tree.traverseDF);
+tree.add('g', 'e', tree.traverseDF);
+
+
+console.log(tree.getLeafs());
+console.log(tree.getRoot());
 
 // t.traverseDF(node => console.log(node));
 // t.traverseBF(node => console.log(node));
