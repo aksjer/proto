@@ -57,6 +57,23 @@ Tree.prototype.getRoot = function () {
   return root;
 };
 
+Tree.prototype.getHeight = function () {
+  const leafs = this.getLeafs();
+  let cpt = 0
+  let height = 0;
+  (function recurse(node) {
+    if (node.parent) {
+      cpt++;
+      recurse(node.parent);
+    } else {
+      if (cpt > height) height = cpt;
+      cpt = 0;
+      if (leafs.length) recurse(leafs.shift());
+    }
+  })(leafs.shift());
+  return height;
+};
+
 const tree = new Tree(new Node('a'));
 
 tree.add('b', 'a', tree.traverseDF);
