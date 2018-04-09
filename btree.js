@@ -18,7 +18,7 @@ class Tree {
         } else {
           node.left = new Node(data);
         }
-      } else {
+      } else if (node.data < data) {
         if (node.right) {
           recurse(node.right)
         } else {
