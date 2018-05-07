@@ -39,3 +39,18 @@ sub.next('buddy');
 // const source = sub.concat(Rx.Observable.of('end'));
 const source = sub.merge(Rx.Observable.of('end').delay(5000));
 source.subscribe(observer);
+
+
+// rxjs
+//     .fromEvent(document.getElementsByTagName('button'), 'click')
+//     .pipe(
+//         rxjs.operators.groupBy(e => e.target.textContent, e => e.target.textContent),
+//         rxjs.operators.mergeMap(obs => {
+//             return obs.pipe(
+//                 rxjs.operators.bufferTime(1000),
+//                 // rxjs.operators.filter(e => e.length > 5),
+//                 // rxjs.operators.map(e => e[0])
+//             )
+//         }),
+//     )
+//     .subscribe(e => console.log(e));
