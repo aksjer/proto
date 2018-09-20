@@ -1,22 +1,20 @@
-let zone = Zone.current;
-let main = () => {
-    console.log('a');
-    setTimeout(() => console.log('b'), 2000);
-    console.log('c');
-};
-
-let myZone = zone.fork({
-    name: 'myZone',
-    onInvoke(delegate, current, target, task, applyThis, applyArgs, source) {
-        console.log(new Date().getSeconds());
-        return delegate.invoke(target, task, applyThis, applyArgs, source);
-    },
-    onHasTask(delegate, current, target, hasTaskState) {
-        delegate.hasTask(target, hasTaskState);
-        if (!hasTaskState.macroTask) {
-            console.log(new Date().getSeconds());
-        }
+let t;
+let myZone = Zone.current.fork({
+  name: 'myZone',
+  onInvoke(delegate, current, target, task, applyThis, applyArgs, source) {
+    t = new Date();
+    return delegate.invoke(target, task, applyThis, applyArgs, source);
+  },
+  onHasTask(delegate, current, target, hasTaskState) {
+    delegate.hasTask(target, hasTaskState);
+    if (!hasTaskState.macroTask) {
+      console.log(`${new Date() - t} ms`);
     }
+  }
 });
-myZone.run(main);
-// console.log(zone.myvar);
+myZone.run(() => {
+  setTimeout(() => console.log('z'), 3500);
+  console.log('a');
+  setTimeout(() => console.log('b'), 2000);
+  console.log('c');
+});
