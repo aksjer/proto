@@ -90,7 +90,6 @@ function permute(s, l, r) {
     for (let i = l; i <= r; i++) {
       s = swap(s, l, i);
       permute(s, l + 1, r);
-      s = swap(s, l, i);
     }
   }
 }
