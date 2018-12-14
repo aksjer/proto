@@ -96,10 +96,8 @@ function permute(s, l, r) {
 
 function swap(s, i, j) {
   const t = s[j];
-  let c = s;
-  c = c.replaceAt(j, s[i]);
-  c = c.replaceAt(i, t);
-  return c;
+  s = s.replaceAt(j, s[i]);
+  return s.replaceAt(i, t);
 }
 permute(s, 0, s.length - 1);
 console.log(tab);
